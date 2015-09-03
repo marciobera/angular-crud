@@ -1,1 +1,96 @@
-My Page
+<!doctype html>
+<html ng-app="meuApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+</head>
+<body>
+
+	<div class="container" ng-controller="cadastroController">
+		<h1>Welcome to {{nomeApp}}! <small>Cadastrado de Clientes</small></h1>
+		<hr>
+		<p class="text-right">
+			<button class="btn btn-primary" ng-show="!isCadastroSelecionado(cadastros) && !showForm" ng-click="showForm=true">Adicionar Cliente</button>
+			<button class="btn btn-info" ng-click="editarCliente()" ng-if="isCadastroSelecionado(cadastros) && contaItens == 1">Editar Cliente</button>
+			<button class="btn btn-danger" ng-click="apagarClientes(cadastros)" ng-if="isCadastroSelecionado(cadastros)">Apagar Cliente(s)</button>
+		</p>
+		<div ng-hide="showForm">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th><input type="checkbox" ng-disabled="!cadastros.length" ng-model="checkedAll" ng-checked="{{checkedAll}}" ng-click="selecionarTudo(checkedAll)"></th>
+						<th>NOME</th>
+						<th>EMAIL</th>
+						<th>SEXO</th>
+						<th>ATIVO</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-if="cadastros.length > 0" ng-class="{'warning': cadastro.warning}" ng-repeat="cadastro in cadastros">
+						<td><input type="checkbox" ng-change="change(cadastro.warning)" ng-model="cadastro.warning" ng-checked="{{cadastro.warning}}"></td>
+						<td>{{cadastro.nome}}</td>
+						<td>{{cadastro.email}}</td>
+						<td>{{cadastro.sexo}}</td>
+						<td>{{cadastro.ativo}}</td>
+					</tr>
+					<tr ng-if="cadastros.length <= 0">
+						<td colspan="5" align="center">Nenhum cliente cadastrado!</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-show="showForm">
+			<form name="cadastroForm">
+				<p>
+					<input type="text" ng-model="cadastro.nome" name="nome" class="form-control" placeholder="Nome" ng-required="true">
+					<div class="alert alert-danger" ng-show="cadastroForm.nome.$invalid && cadastroForm.nome.$dirty">
+						Preencha o campo nome!
+					</div>
+				</p>
+				<p>
+					<input type="email" ng-model="cadastro.email" name="email" class="form-control" placeholder="Email" ng-required="true">
+					<div class="alert alert-danger" ng-show="cadastroForm.email.$error.required && cadastroForm.email.$dirty">
+						Preencha o campo Email!
+					</div>
+					<div class="alert alert-danger" ng-show="cadastroForm.email.$error.email">
+						Preencha um Email válido!
+					</div>
+
+				</p>
+				<p>
+					Sexo:
+					<br>
+					<select name="sexo" ng-model="cadastro.sexo" value="M" ng-required="true" class="form-control">
+						<option value="" selected="selected" disabled="disabled">Selecione o Sexo</option>
+						<option value="M">Masculino</option>
+						<option value="F">Feminino</option>
+					</select>
+				</p>
+				<p>
+					Ativo:
+					<br>
+					<label>Sim <input type="radio" name="ativo" ng-model="cadastro.ativo" value="true" ng-required="true"></label> &nbsp;
+					<label>Não <input type="radio" name="ativo" ng-model="cadastro.ativo" value="false" ng-required="true"></label>
+				</p>
+					
+				<p>
+					<button ng-click="adicionarCliente(cadastro)" ng-disabled="cadastroForm.$invalid" class="btn btn-success btn-block">Salvar</button>
+					<button ng-click="cancelarCliente(cadastro)" class="btn btn-default btn-block">Cancelar</button>
+				</p>
+			</form>
+		</div>
+	</div>
+	<hr>
+	<div class="text-center">
+		<small>Desenvolvido por <b>@marciobera</b> em Setembro, 2015</small>
+	</div>
+	
+
+	<script type="text/javascript" src="angular.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	
+
+	
+</body>
+</html>
