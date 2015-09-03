@@ -1,3 +1,7 @@
-# Tutorial
+#Angular CRUD - Demonstração
 
-This is my tutorial repository.
+Minha primeira aplicação com Angular JS.
+
+Veja o <a href="https://marciobera.github.io/angular-crud/" target="_blank">Demo</a> da aplicação.
+
+:)
